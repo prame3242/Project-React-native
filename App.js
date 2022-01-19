@@ -1,56 +1,66 @@
 import React from 'react';
-import {useState, useMemo} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
-// import all use component
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  ScrollView,
-  SafeAreaView,
-  RefreshControl,
-  TextInput,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import FirstPage from './screens/FirstPage';
+import SecondPage from './screens/SecondPage';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [inputValue, setInputValue] = useState('');
-
-  const checkValueIsNumberOrNot = () => {
-    if (isNaN(inputValue)) {
-      alert('It is not a number');
-    }else{
-      alert('It is number');
-    }
-  }
-
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Enter Text"
-          style={styles.textInputStyle}
-          onChangeText={inputValue => setInputValue(inputValue)}
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#FF69B4',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen
+          name="First"
+          component={FirstPage}
+          options={{title: 'หน้าหลัก'}}
         />
-        <Button title="Submit" color="#606070" onPress={checkValueIsNumberOrNot} />
-      </View>
-    </SafeAreaView>
+        <Stack.Screen
+          name="Second"
+          component={SecondPage}
+          options={{title: 'เกี่ยวกับเรา'}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 60,
+    padding: 20,
   },
-  textInputStyle: {
+  heading: {
+    fontSize: 25,
     textAlign: 'center',
-    height: 50,
-    width: '70%',
-    marginBottom: 10,
-    borderColor: 'black',
+    marginVertical: 10,
+  },
+  textStyle: {
+    textAlign: 'center',
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  inputStyle: {
+    width: '80%',
+    height: 44,
+    padding: 10,
+    marginVertical: 10,
+    backgroundColor: '#DBDBD6',
   },
 });
-
-export default App;
